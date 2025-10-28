@@ -37,7 +37,7 @@ const priorAuthorizations: PriorAuthorization[] = [
     daysPending: 0,
     lastUpdate: 'Just now',
     priority: 'high',
-    notes: 'PA submitted from START form - pending insurance review'
+    notes: 'PA submitted by Dr. Cheng\'s office - tracking status with insurance'
   },
   {
     id: 'PA001',
@@ -50,7 +50,7 @@ const priorAuthorizations: PriorAuthorization[] = [
     daysPending: 3,
     lastUpdate: 'Today 2:30 PM',
     priority: 'high',
-    notes: 'PA approved today - ready for copay enrollment call'
+    notes: 'PA approved by insurance - patient now eligible for copay assistance enrollment'
   },
   {
     id: 'PA002',

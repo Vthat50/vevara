@@ -287,7 +287,7 @@ export default function StartFormViewerPage() {
                 <div className="space-y-2">
                   {form.status === 'complete' && form.benefitsInvestigation?.paRequired && (
                     <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=prior-authorization'}>
-                      Submit Prior Authorization
+                      Track PA Status (Provider Submitted)
                     </Button>
                   )}
                   <Button variant="secondary" className="w-full" onClick={() => window.print()}>

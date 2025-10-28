@@ -97,7 +97,7 @@ const startForms: StartForm[] = [
       estimatedSavings: '$175/month',
       completedDate: 'Oct 26, 2024 2:35 PM'
     },
-    nextAction: 'Submit Prior Authorization',
+    nextAction: 'Track PA Status',
     pdfPath: '/start-forms/michael-anderson-avonex-page-4.pdf'
   },
   {
@@ -141,7 +141,7 @@ const startForms: StartForm[] = [
       estimatedSavings: '$150/month',
       completedDate: 'Today 9:20 AM'
     },
-    nextAction: 'Submit Prior Authorization'
+    nextAction: 'Track PA Status'
   },
   {
     id: 'SF002',
@@ -244,7 +244,7 @@ const startForms: StartForm[] = [
       estimatedSavings: '$175/month',
       completedDate: 'Today 8:30 AM'
     },
-    nextAction: 'Submit Prior Authorization'
+    nextAction: 'Track PA Status'
   },
   {
     id: 'SF005',
