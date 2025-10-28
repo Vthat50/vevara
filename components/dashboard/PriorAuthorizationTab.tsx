@@ -5,6 +5,10 @@ import { FileCheck, Clock, CheckCircle, XCircle, AlertCircle, Building2, Calenda
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 
+interface PriorAuthorizationTabProps {
+  onNavigate?: (tab: string) => void
+}
+
 interface PriorAuthorization {
   id: string
   patientName: string
@@ -23,8 +27,21 @@ interface PriorAuthorization {
 
 const priorAuthorizations: PriorAuthorization[] = [
   {
-    id: 'PA001',
+    id: 'PA008',
     patientName: 'Michael Anderson',
+    medication: 'AVONEX (interferon beta-1a)',
+    insurance: 'Blue Cross Blue Shield',
+    prescribingDoctor: 'Dr. Michael Cheng',
+    status: 'submitted',
+    submittedDate: 'Today',
+    daysPending: 0,
+    lastUpdate: 'Just now',
+    priority: 'high',
+    notes: 'PA submitted from START form - pending insurance review'
+  },
+  {
+    id: 'PA001',
+    patientName: 'Jennifer Martinez',
     medication: 'Dupixent 300mg',
     insurance: 'Blue Cross Blue Shield',
     prescribingDoctor: 'Dr. Sarah Williams',
@@ -32,8 +49,8 @@ const priorAuthorizations: PriorAuthorization[] = [
     submittedDate: 'Oct 25, 2024',
     daysPending: 3,
     lastUpdate: 'Today 2:30 PM',
-    priority: 'medium',
-    notes: 'Approved for 12 months, DAW required'
+    priority: 'high',
+    notes: 'PA approved today - ready for copay enrollment call'
   },
   {
     id: 'PA002',
@@ -116,7 +133,7 @@ const priorAuthorizations: PriorAuthorization[] = [
   }
 ]
 
-export default function PriorAuthorizationTab() {
+export default function PriorAuthorizationTab({ onNavigate }: PriorAuthorizationTabProps) {
   const [selectedPA, setSelectedPA] = useState<PriorAuthorization | null>(priorAuthorizations[0])
   const [filterStatus, setFilterStatus] = useState<string>('all')
 
@@ -132,7 +149,11 @@ export default function PriorAuthorizationTab() {
 
   const handleProceedToEnrollment = () => {
     if (!selectedPA) return
-    alert(`✅ PA Approved - Proceed to Enrollment\n\nPatient: ${selectedPA.patientName}\nMedication: ${selectedPA.medication}\n\nNext steps:\n1. Schedule copay assistance enrollment call\n2. Verify insurance benefits\n3. Process copay card application\n\nWould you like to schedule the enrollment call now?`)
+    const proceed = window.confirm(`✅ PA Approved - Proceed to Enrollment\n\nPatient: ${selectedPA.patientName}\nMedication: ${selectedPA.medication}\n\nNavigate to Copay Assistance tab to:\n1. Schedule enrollment call\n2. Process copay card application\n3. Complete patient enrollment\n\nGo to Copay Assistance tab now?`)
+
+    if (proceed && onNavigate) {
+      onNavigate('outbound-enrollment')
+    }
   }
 
   const handleContactInsurance = () => {

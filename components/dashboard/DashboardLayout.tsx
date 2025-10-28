@@ -28,7 +28,8 @@ import {
   AlertCircle,
   UserCheck,
   Stethoscope,
-  FileCheck
+  FileCheck,
+  FileText
 } from 'lucide-react'
 
 interface DashboardLayoutProps {
@@ -55,7 +56,7 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-    { id: 'patients', label: 'Patients', icon: Users },
+    { id: 'patients', label: 'Referrals & Intake', icon: FileText },
     { id: 'prior-authorization', label: 'Prior Authorization', icon: FileCheck },
     { id: 'outbound-enrollment', label: 'Copay Assistance', icon: PhoneOutgoing },
     { id: 'calls', label: 'Inbound Support', icon: PhoneIncoming },
