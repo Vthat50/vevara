@@ -10,6 +10,7 @@ interface OutboundCall {
   patientName: string
   prescribingDoctor: string
   medication: string
+  phone: string
   doctorConsentStatus: 'pending' | 'obtained' | 'declined'
   doctorConsentDate?: string
   patientConsentStatus: 'not-contacted' | 'pending' | 'accepted' | 'declined'
@@ -53,6 +54,7 @@ const outboundCalls: OutboundCall[] = [
     patientName: 'Jennifer Martinez',
     prescribingDoctor: 'Dr. Sarah Williams',
     medication: 'Ozempic 0.5mg',
+    phone: '+15551234001',
     doctorConsentStatus: 'obtained',
     doctorConsentDate: 'Oct 25, 2024',
     patientConsentStatus: 'accepted',
@@ -66,6 +68,7 @@ const outboundCalls: OutboundCall[] = [
     patientName: 'Robert Taylor',
     prescribingDoctor: 'Dr. Michael Chen',
     medication: 'Humira 40mg',
+    phone: '+15551234002',
     doctorConsentStatus: 'obtained',
     doctorConsentDate: 'Oct 26, 2024',
     patientConsentStatus: 'not-contacted',
@@ -78,6 +81,7 @@ const outboundCalls: OutboundCall[] = [
     patientName: 'Patricia Anderson',
     prescribingDoctor: 'Dr. James Liu',
     medication: 'Trulicity 1.5mg',
+    phone: '+15551234003',
     doctorConsentStatus: 'obtained',
     doctorConsentDate: 'Oct 27, 2024',
     patientConsentStatus: 'pending',
@@ -91,6 +95,7 @@ const outboundCalls: OutboundCall[] = [
     patientName: 'David Kim',
     prescribingDoctor: 'Dr. Emily Rodriguez',
     medication: 'Enbrel 50mg',
+    phone: '+15551234004',
     doctorConsentStatus: 'pending',
     patientConsentStatus: 'not-contacted',
     callAttempts: 0,
@@ -101,6 +106,7 @@ const outboundCalls: OutboundCall[] = [
     patientName: 'Linda White',
     prescribingDoctor: 'Dr. Robert Johnson',
     medication: 'Stelara 90mg',
+    phone: '+15551234005',
     doctorConsentStatus: 'declined',
     doctorConsentDate: 'Oct 26, 2024',
     patientConsentStatus: 'not-contacted',
@@ -232,6 +238,42 @@ export default function CallManagementTab() {
   const [view, setView] = useState<'outbound' | 'inbound'>('outbound')
   const [selectedOutbound, setSelectedOutbound] = useState<OutboundCall | null>(outboundCalls[0])
   const [selectedInbound, setSelectedInbound] = useState<InboundCall | null>(inboundCalls[0])
+  const [isInitiatingCall, setIsInitiatingCall] = useState(false)
+
+  const handleInitiateEnrollmentCall = async (call: OutboundCall) => {
+    setIsInitiatingCall(true)
+
+    try {
+      console.log('Initiating enrollment call for:', call.patientName, call.phone)
+
+      const response = await fetch('/api/initiate-enrollment-call', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phoneNumber: call.phone,
+          patientName: call.patientName,
+          metadata: {
+            medication: call.medication,
+            prescribing_doctor: call.prescribingDoctor,
+            patient_id: call.id,
+          },
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        alert(`✅ Enrollment call initiated successfully to ${call.patientName}!\n\nPhone: ${call.phone}\nConversation ID: ${data.conversationId}`)
+      } else {
+        alert(`❌ Failed to initiate call\n\nError: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Error initiating enrollment call:', error)
+      alert(`❌ Failed to initiate call\n\nError: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    } finally {
+      setIsInitiatingCall(false)
+    }
+  }
 
   const getDoctorConsentColor = (status: OutboundCall['doctorConsentStatus']) => {
     switch (status) {
@@ -452,9 +494,13 @@ export default function CallManagementTab() {
                   )}
 
                   {selectedOutbound.doctorConsentStatus === 'obtained' && selectedOutbound.callStatus === 'ready-to-call' && (
-                    <Button className="w-full mt-4 flex items-center justify-center gap-2">
+                    <Button
+                      className="w-full mt-4 flex items-center justify-center gap-2"
+                      onClick={() => handleInitiateEnrollmentCall(selectedOutbound)}
+                      disabled={isInitiatingCall}
+                    >
                       <Phone className="w-4 h-4" />
-                      Initiate Enrollment Call
+                      {isInitiatingCall ? 'Initiating Call...' : 'Initiate Enrollment Call'}
                     </Button>
                   )}
                 </div>
