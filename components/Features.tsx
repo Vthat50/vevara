@@ -16,38 +16,33 @@ export default function Features() {
   const features = [
     {
       icon: MessageCircle,
-      title: 'Conversational AI Engine',
-      description: 'Natural language understanding with <1 second response time and 99% medical accuracy. Context-aware responses based on patient history.',
+      title: 'Enhance Medication Adherence',
+      description: 'Intelligent voice reminders and check-ins that keep patients on track. Personalized scheduling adapts to individual routines and preferences.',
     },
     {
       icon: PhoneCall,
-      title: 'Outbound Call Automation',
-      description: 'Automated welcome calls, refill reminders, and side effect check-ins. Smart scheduling based on patient behavior patterns.',
-    },
-    {
-      icon: Phone,
-      title: 'Inbound Call Handling',
-      description: '24/7 availability with intelligent routing. Patient authentication via voice biometrics and seamless human escalation.',
-    },
-    {
-      icon: GraduationCap,
-      title: 'Medication Education Q&A',
-      description: 'Interactive guidance for medication administration, dosing schedules, side effects, and when to seek medical attention.',
-    },
-    {
-      icon: CreditCard,
-      title: 'Copay Card Enrollment',
-      description: 'Real-time eligibility checking and automated enrollment workflow. Plain language benefit explanations with SMS confirmation.',
-    },
-    {
-      icon: Activity,
-      title: 'Side Effect Monitoring',
-      description: 'Structured check-ins with severity assessment. Red flag detection for severe reactions with automatic escalation.',
+      title: 'Increase Program Enrollment',
+      description: 'Automated outreach that simplifies onboarding and removes barriers. Conversational guidance makes complex programs easy to understand.',
     },
     {
       icon: Users,
-      title: 'Human Escalation',
-      description: 'Seamless warm transfer to live agents with full context. Average wait time under 60 seconds with quality assurance.',
+      title: 'Scale Patient Support',
+      description: 'Handle thousands of patient interactions simultaneously without compromising quality. Integrates seamlessly with your existing CRM and health systems.',
+    },
+    {
+      icon: GraduationCap,
+      title: 'Patient Education & Guidance',
+      description: 'Interactive Q&A for dosing questions, administration instructions, and common concerns. Accessible information without app downloads or portals.',
+    },
+    {
+      icon: Activity,
+      title: 'Safety Monitoring & Alerts',
+      description: 'Proactive side effect tracking with intelligent severity assessment. Automatic escalation protocols for critical situations that require immediate attention.',
+    },
+    {
+      icon: CreditCard,
+      title: 'Financial Assistance Support',
+      description: 'Streamlined copay card enrollment and benefits verification. Plain-language explanations that help patients access the support they need.',
     },
   ]
 
@@ -67,24 +62,23 @@ export default function Features() {
   }
 
   return (
-    <section id="features" className="py-20 px-6 bg-gray-50">
+    <section id="features" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
-            <span className="text-sm font-medium text-primary">CORE CAPABILITIES</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full mb-6">
+            <span className="text-xs font-medium text-gray-700">PROVEN SOLUTIONS</span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-            Comprehensive Patient Support
+          <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
+            Close the Patient Support Gap
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            AI-powered voice technology that handles every aspect of patient engagement,
-            from initial onboarding to ongoing medication adherence support.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Voice AI that transforms pharmaceutical patient engagement—no apps, no portals, no friction. Just intelligent conversations that drive measurable outcomes.
           </p>
         </motion.div>
 
@@ -108,51 +102,50 @@ export default function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 bg-white rounded-2xl border border-gray-200 p-8 lg:p-12"
+          className="mt-20 bg-gradient-to-br from-gray-50 to-white rounded-3xl border border-gray-200 p-10 lg:p-16"
         >
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Seamless Integration
+              <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
+                Integrates With Your Ecosystem
               </h3>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Connect with your existing pharmacy systems, insurance verification,
-                and CRM platforms. HIPAA-compliant with end-to-end encryption.
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Deploy across your existing infrastructure—pharmacy networks, CRM systems, and patient hubs. Enterprise-grade security with full HIPAA compliance and end-to-end encryption.
               </p>
-              <div className="flex flex-wrap gap-3">
-                <div className="px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
-                  CVS
+              <div className="flex flex-wrap gap-2">
+                <div className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+                  Pharmacy Networks
                 </div>
-                <div className="px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
-                  Walgreens
+                <div className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+                  CRM Platforms
                 </div>
-                <div className="px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
-                  Salesforce
+                <div className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+                  Patient Portals
                 </div>
-                <div className="px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium text-gray-700">
-                  Veeva
+                <div className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-700 shadow-sm">
+                  EHR Systems
                 </div>
-                <div className="px-4 py-2 bg-primary/10 rounded-lg text-sm font-medium text-primary">
-                  +20 more
+                <div className="px-4 py-2 bg-primary/10 rounded-full text-sm font-semibold text-primary">
+                  +25 More
                 </div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-lg p-6">
-                <div className="text-3xl font-bold text-primary mb-2">30+</div>
-                <div className="text-sm text-gray-700">Medication Topics</div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl font-bold text-gray-900 mb-2">15x</div>
+                <div className="text-sm text-gray-600">Enrollment Increase</div>
               </div>
-              <div className="bg-gradient-to-br from-success/10 to-success/5 rounded-lg p-6">
-                <div className="text-3xl font-bold text-success mb-2">100%</div>
-                <div className="text-sm text-gray-700">Call Recording</div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl font-bold text-gray-900 mb-2">92%</div>
+                <div className="text-sm text-gray-600">Patient Satisfaction</div>
               </div>
-              <div className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 rounded-lg p-6">
-                <div className="text-3xl font-bold text-purple-600 mb-2">5+</div>
-                <div className="text-sm text-gray-700">Languages</div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl font-bold text-gray-900 mb-2">50+</div>
+                <div className="text-sm text-gray-600">Languages Supported</div>
               </div>
-              <div className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 rounded-lg p-6">
-                <div className="text-3xl font-bold text-blue-600 mb-2">FDA</div>
-                <div className="text-sm text-gray-700">PDURS Compliant</div>
+              <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-3xl font-bold text-gray-900 mb-2">24/7</div>
+                <div className="text-sm text-gray-600">Always Available</div>
               </div>
             </div>
           </div>

@@ -1,70 +1,61 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckCircle } from 'lucide-react'
+import { ArrowRight, Phone } from 'lucide-react'
 import Button from './Button'
 
 export default function CTA() {
-  const benefits = [
-    'Quick 30-minute setup',
-    'No technical integration required',
-    'Dedicated success manager',
-    'HIPAA-compliant infrastructure',
-  ]
-
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-primary to-primary-dark relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+    <section className="py-24 px-6 relative overflow-hidden">
+      {/* Clean gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 -z-10" />
 
-      <div className="max-w-4xl mx-auto text-center relative z-10">
+      {/* Subtle pattern overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.1),transparent_50%)] -z-10" />
+
+      <div className="max-w-5xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="text-center"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Transform Patient Engagement?
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 border border-white/20 rounded-full mb-8 backdrop-blur-sm">
+            <Phone className="w-3.5 h-3.5 text-white" />
+            <span className="text-xs font-medium text-white">Get Started Today</span>
+          </div>
+
+          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
+            Ready to Close Your<br />Patient Support Gap?
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Join leading pharmaceutical companies using AI to improve medication
-            adherence and patient outcomes.
+
+          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Discover how voice AI can transform your patient engagement strategy. Book a call with our team or hear our AI in action.
           </p>
 
-          <div className="flex flex-wrap gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button
-              variant="secondary"
               size="lg"
-              className="bg-white text-primary hover:bg-gray-100"
+              className="bg-white text-gray-900 hover:bg-gray-100 shadow-xl shadow-black/20 px-8"
             >
-              Schedule Demo
+              Book a Strategy Session
               <ArrowRight className="w-5 h-5 ml-2 inline" />
             </Button>
             <Button
               variant="outline"
               size="lg"
-              className="border-white text-white hover:bg-white/10"
+              className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8"
             >
-              Contact Sales
+              Listen to Demo Call
             </Button>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex items-center gap-2 text-white"
-              >
-                <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                <span className="text-sm">{benefit}</span>
-              </motion.div>
-            ))}
+          {/* Disclaimer */}
+          <div className="max-w-2xl mx-auto">
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Our voice AI is designed to support patient journeys and enhance medication adherence—but it doesn't replace professional medical advice. Patients should always consult their healthcare provider for medical decisions.
+            </p>
           </div>
         </motion.div>
       </div>

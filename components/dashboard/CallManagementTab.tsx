@@ -1,25 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { PhoneOutgoing, PhoneIncoming, Clock, Phone, CheckCircle, XCircle, AlertCircle, FileCheck, UserCheck, Activity } from 'lucide-react'
+import { PhoneIncoming, Clock, Phone, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
-
-interface OutboundCall {
-  id: string
-  patientName: string
-  prescribingDoctor: string
-  medication: string
-  phone: string
-  doctorConsentStatus: 'pending' | 'obtained' | 'declined'
-  doctorConsentDate?: string
-  patientConsentStatus: 'not-contacted' | 'pending' | 'accepted' | 'declined'
-  callAttempts: number
-  lastCallAttempt?: string
-  scheduledCallTime?: string
-  callStatus: 'awaiting-doctor-consent' | 'ready-to-call' | 'attempted' | 'enrolled' | 'declined'
-  enrollmentDate?: string
-}
 
 interface InboundCall {
   id: string
@@ -47,73 +31,6 @@ interface InboundTranscript {
   messages: InboundTranscriptMessage[]
   resolution: string
 }
-
-const outboundCalls: OutboundCall[] = [
-  {
-    id: 'OB001',
-    patientName: 'Jennifer Martinez',
-    prescribingDoctor: 'Dr. Sarah Williams',
-    medication: 'Ozempic 0.5mg',
-    phone: '+15551234001',
-    doctorConsentStatus: 'obtained',
-    doctorConsentDate: 'Oct 25, 2024',
-    patientConsentStatus: 'accepted',
-    callAttempts: 1,
-    lastCallAttempt: 'Oct 27, 2:00 PM',
-    callStatus: 'enrolled',
-    enrollmentDate: 'Oct 27, 2024'
-  },
-  {
-    id: 'OB002',
-    patientName: 'Robert Taylor',
-    prescribingDoctor: 'Dr. Michael Chen',
-    medication: 'Humira 40mg',
-    phone: '+15551234002',
-    doctorConsentStatus: 'obtained',
-    doctorConsentDate: 'Oct 26, 2024',
-    patientConsentStatus: 'not-contacted',
-    callAttempts: 0,
-    scheduledCallTime: 'Today 3:30 PM',
-    callStatus: 'ready-to-call'
-  },
-  {
-    id: 'OB003',
-    patientName: 'Patricia Anderson',
-    prescribingDoctor: 'Dr. James Liu',
-    medication: 'Trulicity 1.5mg',
-    phone: '+15551234003',
-    doctorConsentStatus: 'obtained',
-    doctorConsentDate: 'Oct 27, 2024',
-    patientConsentStatus: 'pending',
-    callAttempts: 2,
-    lastCallAttempt: 'Oct 27, 11:00 AM',
-    scheduledCallTime: 'Today 5:00 PM',
-    callStatus: 'attempted'
-  },
-  {
-    id: 'OB004',
-    patientName: 'David Kim',
-    prescribingDoctor: 'Dr. Emily Rodriguez',
-    medication: 'Enbrel 50mg',
-    phone: '+15551234004',
-    doctorConsentStatus: 'pending',
-    patientConsentStatus: 'not-contacted',
-    callAttempts: 0,
-    callStatus: 'awaiting-doctor-consent'
-  },
-  {
-    id: 'OB005',
-    patientName: 'Linda White',
-    prescribingDoctor: 'Dr. Robert Johnson',
-    medication: 'Stelara 90mg',
-    phone: '+15551234005',
-    doctorConsentStatus: 'declined',
-    doctorConsentDate: 'Oct 26, 2024',
-    patientConsentStatus: 'not-contacted',
-    callAttempts: 0,
-    callStatus: 'declined'
-  }
-]
 
 const inboundCalls: InboundCall[] = [
   {
@@ -235,292 +152,21 @@ const inboundTranscripts: InboundTranscript[] = [
 ]
 
 export default function CallManagementTab() {
-  const [view, setView] = useState<'outbound' | 'inbound'>('outbound')
-  const [selectedOutbound, setSelectedOutbound] = useState<OutboundCall | null>(outboundCalls[0])
   const [selectedInbound, setSelectedInbound] = useState<InboundCall | null>(inboundCalls[0])
-  const [isInitiatingCall, setIsInitiatingCall] = useState(false)
-
-  const handleInitiateEnrollmentCall = async (call: OutboundCall) => {
-    setIsInitiatingCall(true)
-
-    try {
-      const testPhoneNumber = '+15519982979'
-      console.log('Initiating enrollment call for:', call.patientName, 'to test number:', testPhoneNumber)
-
-      const response = await fetch('/api/initiate-enrollment-call', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phoneNumber: testPhoneNumber,
-          patientName: call.patientName,
-          metadata: {
-            medication: call.medication,
-            prescribing_doctor: call.prescribingDoctor,
-            patient_id: call.id,
-          },
-        }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        alert(`✅ Enrollment call initiated successfully to ${call.patientName}!\n\nPhone: ${call.phone}\nConversation ID: ${data.conversationId}`)
-      } else {
-        alert(`❌ Failed to initiate call\n\nError: ${data.error}`)
-      }
-    } catch (error) {
-      console.error('Error initiating enrollment call:', error)
-      alert(`❌ Failed to initiate call\n\nError: ${error instanceof Error ? error.message : 'Unknown error'}`)
-    } finally {
-      setIsInitiatingCall(false)
-    }
-  }
-
-  const getDoctorConsentColor = (status: OutboundCall['doctorConsentStatus']) => {
-    switch (status) {
-      case 'obtained': return 'bg-success/10 text-success border-success/20'
-      case 'pending': return 'bg-orange-500/10 text-orange-600 border-orange-500/20'
-      case 'declined': return 'bg-red-500/10 text-red-600 border-red-500/20'
-    }
-  }
-
-  const getCallStatusColor = (status: OutboundCall['callStatus']) => {
-    switch (status) {
-      case 'enrolled': return 'bg-success/10 text-success border-success/20'
-      case 'ready-to-call': return 'bg-primary/10 text-primary border-primary/20'
-      case 'attempted': return 'bg-orange-500/10 text-orange-600 border-orange-500/20'
-      case 'awaiting-doctor-consent': return 'bg-gray-200 text-gray-600 border-gray-300'
-      case 'declined': return 'bg-red-500/10 text-red-600 border-red-500/20'
-    }
-  }
 
   return (
     <div className="space-y-6">
-      {/* Enrollment Funnel */}
+      {/* Header */}
       <div>
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Digital Companion Enrollment Funnel</h3>
-        <div className="grid grid-cols-5 gap-6">
-          {/* Stage 1: Doctor Consent */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <FileCheck className="w-6 h-6 text-primary" />
-              </div>
-              <span className="text-sm font-medium text-success">
-                +{Math.round((outboundCalls.filter(c => c.callStatus === 'attempted' || c.callStatus === 'ready-to-call').length / outboundCalls.filter(c => c.doctorConsentStatus === 'obtained').length) * 100)}%
-              </span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">
-              {outboundCalls.filter(c => c.doctorConsentStatus === 'obtained').length}
-            </div>
-            <div className="text-sm text-gray-600">Doctor Consent</div>
-          </Card>
-
-          {/* Stage 2: Patient Contacted */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
-                <Phone className="w-6 h-6 text-blue-500" />
-              </div>
-              <span className="text-sm font-medium text-success">
-                +{Math.round((outboundCalls.filter(c => c.callStatus === 'enrolled').length / outboundCalls.filter(c => c.callStatus === 'attempted' || c.callStatus === 'ready-to-call').length) * 100)}%
-              </span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">
-              {outboundCalls.filter(c => c.callStatus === 'attempted' || c.callStatus === 'ready-to-call').length}
-            </div>
-            <div className="text-sm text-gray-600">Patient Contacted</div>
-          </Card>
-
-          {/* Stage 3: Enrolled */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center">
-                <UserCheck className="w-6 h-6 text-success" />
-              </div>
-              <span className="text-sm font-medium text-success">+100%</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">
-              {outboundCalls.filter(c => c.callStatus === 'enrolled').length}
-            </div>
-            <div className="text-sm text-gray-600">Enrolled</div>
-          </Card>
-
-          {/* Stage 4: Active */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center">
-                <Activity className="w-6 h-6 text-purple-600" />
-              </div>
-              <span className="text-sm font-medium text-success">+94%</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">
-              {outboundCalls.filter(c => c.callStatus === 'enrolled').length}
-            </div>
-            <div className="text-sm text-gray-600">Active</div>
-          </Card>
-
-          {/* Stage 5: Adherent */}
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-success" />
-              </div>
-              <span className="text-sm font-medium text-success">+2.1%</span>
-            </div>
-            <div className="text-3xl font-bold text-gray-900 mb-1">
-              {Math.round(outboundCalls.filter(c => c.callStatus === 'enrolled').length * 0.94)}
-            </div>
-            <div className="text-sm text-gray-600">Adherent Patients</div>
-          </Card>
-        </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Inbound Patient Support</h2>
+        <p className="text-gray-600">Manage and respond to incoming patient calls in real-time</p>
       </div>
 
-      {/* View Toggle */}
-      <Card className="p-6">
-        <div className="flex gap-3">
-          <Button variant={view === 'outbound' ? 'primary' : 'outline'} size="sm" onClick={() => setView('outbound')}>
-            <PhoneOutgoing className="w-4 h-4 mr-2" />
-            Proactive Patient Outreach
-          </Button>
-          <Button variant={view === 'inbound' ? 'primary' : 'outline'} size="sm" onClick={() => setView('inbound')}>
-            <PhoneIncoming className="w-4 h-4 mr-2" />
-            Inbound Patient Support
-          </Button>
-        </div>
-      </Card>
-
-      {/* Outbound View */}
-      {view === 'outbound' && (
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Outbound List */}
-          <Card className="p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Outbound Enrollment Pipeline</h3>
-            <div className="space-y-3">
-              {outboundCalls.map((call) => (
-                <div
-                  key={call.id}
-                  onClick={() => setSelectedOutbound(call)}
-                  className={`p-4 rounded-lg border-2 cursor-pointer ${
-                    selectedOutbound?.id === call.id ? 'border-primary bg-primary/5' : 'border-gray-200'
-                  }`}
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      <div className="font-bold text-gray-900">{call.patientName}</div>
-                      <div className="text-sm text-gray-600">{call.medication}</div>
-                    </div>
-                    <div className={`px-2 py-1 rounded text-xs font-medium border ${getCallStatusColor(call.callStatus)}`}>
-                      {call.callStatus.toUpperCase().replace(/-/g, ' ')}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs">
-                    <div className={`flex items-center gap-1 px-2 py-1 rounded border ${getDoctorConsentColor(call.doctorConsentStatus)}`}>
-                      {call.doctorConsentStatus === 'obtained' ? <CheckCircle className="w-3 h-3" /> :
-                       call.doctorConsentStatus === 'declined' ? <XCircle className="w-3 h-3" /> :
-                       <Clock className="w-3 h-3" />}
-                      <span>Dr: {call.doctorConsentStatus}</span>
-                    </div>
-                    <span className="text-gray-600">Attempts: {call.callAttempts}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
-
-          {/* Outbound Details */}
-          <Card className="p-6">
-            {selectedOutbound ? (
-              <div>
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Enrollment Details</h3>
-                <div className="space-y-4">
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Patient</div>
-                    <div className="font-bold text-gray-900">{selectedOutbound.patientName}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Prescribing Doctor</div>
-                    <div className="font-bold text-gray-900">{selectedOutbound.prescribingDoctor}</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Medication</div>
-                    <div className="font-bold text-gray-900">{selectedOutbound.medication}</div>
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-200">
-                    <h4 className="font-bold text-gray-900 mb-3">Consent Workflow</h4>
-
-                    {/* Doctor Consent */}
-                    <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-gray-700">1. Doctor Consent</span>
-                        <div className={`px-2 py-1 rounded text-xs font-medium border ${getDoctorConsentColor(selectedOutbound.doctorConsentStatus)}`}>
-                          {selectedOutbound.doctorConsentStatus === 'obtained' && <><CheckCircle className="w-3 h-3 inline mr-1" />Obtained</>}
-                          {selectedOutbound.doctorConsentStatus === 'pending' && <><Clock className="w-3 h-3 inline mr-1" />Pending</>}
-                          {selectedOutbound.doctorConsentStatus === 'declined' && <><XCircle className="w-3 h-3 inline mr-1" />Declined</>}
-                        </div>
-                      </div>
-                      {selectedOutbound.doctorConsentDate && (
-                        <div className="text-xs text-gray-600">Date: {selectedOutbound.doctorConsentDate}</div>
-                      )}
-                    </div>
-
-                    {/* Patient Outreach */}
-                    <div className="p-3 bg-gray-50 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-gray-700">2. Patient Outreach</span>
-                        <span className="text-xs text-gray-600">Attempts: {selectedOutbound.callAttempts}</span>
-                      </div>
-                      {selectedOutbound.lastCallAttempt && (
-                        <div className="text-xs text-gray-600 mb-1">Last attempt: {selectedOutbound.lastCallAttempt}</div>
-                      )}
-                      {selectedOutbound.scheduledCallTime && (
-                        <div className="text-xs text-primary font-medium">Next call: {selectedOutbound.scheduledCallTime}</div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Current Status</div>
-                    <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium border ${getCallStatusColor(selectedOutbound.callStatus)}`}>
-                      {selectedOutbound.callStatus.toUpperCase().replace(/-/g, ' ')}
-                    </div>
-                  </div>
-
-                  {selectedOutbound.enrollmentDate && (
-                    <div>
-                      <div className="text-sm text-gray-600 mb-1">Enrollment Date</div>
-                      <div className="font-bold text-success">{selectedOutbound.enrollmentDate}</div>
-                    </div>
-                  )}
-
-                  {selectedOutbound.doctorConsentStatus === 'obtained' && selectedOutbound.callStatus === 'ready-to-call' && (
-                    <Button
-                      className="w-full mt-4 flex items-center justify-center gap-2"
-                      onClick={() => handleInitiateEnrollmentCall(selectedOutbound)}
-                      disabled={isInitiatingCall}
-                    >
-                      <Phone className="w-4 h-4" />
-                      {isInitiatingCall ? 'Initiating Call...' : 'Initiate Enrollment Call'}
-                    </Button>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center text-gray-500 py-12">
-                <p>Select an outbound call to view details</p>
-              </div>
-            )}
-          </Card>
-        </div>
-      )}
-
-      {/* Inbound View */}
-      {view === 'inbound' && (
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Inbound List */}
-          <Card className="p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Inbound Support Calls</h3>
+      {/* Inbound Support View */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Inbound List */}
+        <Card className="p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Inbound Support Calls</h3>
             <div className="space-y-3">
               {inboundCalls.map((call) => (
                 <div
@@ -553,10 +199,10 @@ export default function CallManagementTab() {
                 </div>
               ))}
             </div>
-          </Card>
+        </Card>
 
-          {/* Inbound Details */}
-          <Card className="p-6 overflow-y-auto max-h-[calc(100vh-400px)]">
+        {/* Inbound Details */}
+        <Card className="p-6 overflow-y-auto max-h-[calc(100vh-400px)]">
             {selectedInbound ? (
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Call Details</h3>
@@ -643,9 +289,8 @@ export default function CallManagementTab() {
                 <p>Select an inbound call to view details</p>
               </div>
             )}
-          </Card>
-        </div>
-      )}
+        </Card>
+      </div>
     </div>
   )
 }
