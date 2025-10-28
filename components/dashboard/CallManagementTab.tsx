@@ -244,13 +244,14 @@ export default function CallManagementTab() {
     setIsInitiatingCall(true)
 
     try {
-      console.log('Initiating enrollment call for:', call.patientName, call.phone)
+      const testPhoneNumber = '+15519982979'
+      console.log('Initiating enrollment call for:', call.patientName, 'to test number:', testPhoneNumber)
 
       const response = await fetch('/api/initiate-enrollment-call', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          phoneNumber: call.phone,
+          phoneNumber: testPhoneNumber,
           patientName: call.patientName,
           metadata: {
             medication: call.medication,
