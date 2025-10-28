@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 import OverviewTab from '@/components/dashboard/OverviewTab'
@@ -11,7 +11,7 @@ import PriorAuthorizationTab from '@/components/dashboard/PriorAuthorizationTab'
 import EscalationTab from '@/components/dashboard/EscalationTab'
 import IntegrationsTab from '@/components/dashboard/IntegrationsTab'
 
-export default function DashboardPage() {
+function DashboardContent() {
   const searchParams = useSearchParams()
   const tabParam = searchParams.get('tab')
   const [activeTab, setActiveTab] = useState(tabParam || 'overview')
@@ -47,5 +47,13 @@ export default function DashboardPage() {
     <DashboardLayout activeTab={activeTab} onTabChange={setActiveTab}>
       {renderTabContent()}
     </DashboardLayout>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center">Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
   )
 }
