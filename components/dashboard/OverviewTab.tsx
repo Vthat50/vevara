@@ -271,29 +271,35 @@ export default function OverviewTab({ onNavigate }: OverviewTabProps) {
 
       {/* Quick Actions */}
       <div className="grid md:grid-cols-3 gap-6">
-        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => onNavigate?.('calls')}>
-          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-            <Phone className="w-6 h-6 text-primary" />
-          </div>
-          <h3 className="font-bold text-gray-900 mb-2">Manage Calls</h3>
-          <p className="text-sm text-gray-600">View outbound and inbound call schedules</p>
-        </Card>
+        <div onClick={() => onNavigate?.('calls')}>
+          <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+              <Phone className="w-6 h-6 text-primary" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">Manage Calls</h3>
+            <p className="text-sm text-gray-600">View outbound and inbound call schedules</p>
+          </Card>
+        </div>
 
-        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => onNavigate?.('patients')}>
-          <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center mb-4">
-            <Users className="w-6 h-6 text-success" />
-          </div>
-          <h3 className="font-bold text-gray-900 mb-2">Browse Patients</h3>
-          <p className="text-sm text-gray-600">View all patients and their call history</p>
-        </Card>
+        <div onClick={() => onNavigate?.('patients')}>
+          <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center mb-4">
+              <Users className="w-6 h-6 text-success" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">Browse Patients</h3>
+            <p className="text-sm text-gray-600">View all patients and their call history</p>
+          </Card>
+        </div>
 
-        <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => onNavigate?.('integrations')}>
-          <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-4">
-            <BarChart3 className="w-6 h-6 text-orange-600" />
-          </div>
-          <h3 className="font-bold text-gray-900 mb-2">View Integrations</h3>
-          <p className="text-sm text-gray-600">Pharmacy, insurance, and CRM integrations</p>
-        </Card>
+        <div onClick={() => onNavigate?.('integrations')}>
+          <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-4">
+              <BarChart3 className="w-6 h-6 text-orange-600" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">View Integrations</h3>
+            <p className="text-sm text-gray-600">Pharmacy, insurance, and CRM integrations</p>
+          </Card>
+        </div>
       </div>
 
       {/* Today's Activity Feed */}
