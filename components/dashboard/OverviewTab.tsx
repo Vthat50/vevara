@@ -1,6 +1,6 @@
 'use client'
 
-import { Phone, Users, TrendingUp, Activity, DollarSign, AlertTriangle, CheckCircle, Clock, ThumbsUp, BarChart3 } from 'lucide-react'
+import { Phone, Users, TrendingUp, Activity, DollarSign, AlertTriangle, CheckCircle, Clock, ThumbsUp, BarChart3, CreditCard, UserPlus } from 'lucide-react'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
 
@@ -22,8 +22,7 @@ export default function OverviewTab({ onNavigate }: OverviewTabProps) {
 
   const alerts = [
     { id: 1, severity: 'high', message: 'Call volume 23% above average in last hour', time: '5 min ago' },
-    { id: 2, severity: 'medium', message: 'AI resolution rate dropped to 68% (below 71% target)', time: '15 min ago' },
-    { id: 3, severity: 'low', message: '3 patients with adherence below 70%', time: '1 hr ago' },
+    { id: 2, severity: 'low', message: '3 patients with adherence below 70%', time: '1 hr ago' },
   ]
 
   const callVolumeHourly = [
@@ -46,29 +45,6 @@ export default function OverviewTab({ onNavigate }: OverviewTabProps) {
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
         <p className="text-gray-600">Real-time analytics and performance monitoring for your Voice AI platform.</p>
       </div>
-
-      {/* Alert System */}
-      <Card className="p-6 border-l-4 border-orange-500">
-        <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle className="w-5 h-5 text-orange-600" />
-          <h3 className="font-bold text-gray-900">Active Alerts</h3>
-        </div>
-        <div className="space-y-3">
-          {alerts.map((alert) => (
-            <div key={alert.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
-              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                alert.severity === 'high' ? 'bg-red-500' :
-                alert.severity === 'medium' ? 'bg-orange-500' :
-                'bg-yellow-500'
-              }`} />
-              <div className="flex-1">
-                <p className="text-sm text-gray-900">{alert.message}</p>
-                <p className="text-xs text-gray-600 mt-1">{alert.time}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
 
       {/* Key Metrics */}
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -187,28 +163,28 @@ export default function OverviewTab({ onNavigate }: OverviewTabProps) {
           </div>
         </Card>
 
-        {/* Cost Savings Calculator */}
+        {/* Copay Enrollment */}
         <Card className="p-6">
           <div className="flex items-center gap-2 mb-4">
-            <DollarSign className="w-5 h-5 text-success" />
-            <h3 className="font-bold text-gray-900">Cost Savings Calculator</h3>
+            <CreditCard className="w-5 h-5 text-success" />
+            <h3 className="font-bold text-gray-900">Copay Enrollment</h3>
           </div>
           <div className="mb-6">
-            <div className="text-4xl font-bold text-success mb-2">$127,450</div>
-            <p className="text-sm text-gray-600">Total savings this month</p>
+            <div className="text-4xl font-bold text-success mb-2">287</div>
+            <p className="text-sm text-gray-600">Total enrollments this month</p>
           </div>
           <div className="space-y-3 text-sm">
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Call Center Costs Avoided:</span>
-              <span className="font-bold text-success">$89,200</span>
+              <span className="text-gray-600">Active Enrollments:</span>
+              <span className="font-bold text-success">264</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Improved Adherence Value:</span>
-              <span className="font-bold text-primary">$28,750</span>
+              <span className="text-gray-600">New This Week:</span>
+              <span className="font-bold text-primary">43</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Reduced Escalations:</span>
-              <span className="font-bold text-purple-600">$9,500</span>
+              <span className="text-gray-600">Avg Savings Per Patient:</span>
+              <span className="font-bold text-purple-600">$165/mo</span>
             </div>
           </div>
         </Card>

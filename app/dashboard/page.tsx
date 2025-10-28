@@ -6,7 +6,7 @@ import OverviewTab from '@/components/dashboard/OverviewTab'
 import PatientsTab from '@/components/dashboard/PatientsTab'
 import CallManagementTab from '@/components/dashboard/CallManagementTab'
 import OutboundEnrollmentTab from '@/components/dashboard/OutboundEnrollmentTab'
-import MedicationEducationTab from '@/components/dashboard/MedicationEducationTab'
+import PriorAuthorizationTab from '@/components/dashboard/PriorAuthorizationTab'
 import EscalationTab from '@/components/dashboard/EscalationTab'
 import IntegrationsTab from '@/components/dashboard/IntegrationsTab'
 
@@ -23,8 +23,8 @@ export default function DashboardPage() {
         return <CallManagementTab />
       case 'outbound-enrollment':
         return <OutboundEnrollmentTab />
-      case 'medication-education':
-        return <MedicationEducationTab />
+      case 'prior-authorization':
+        return <PriorAuthorizationTab />
       case 'escalation':
         return <EscalationTab />
       case 'integrations':
