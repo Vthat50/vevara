@@ -157,56 +157,59 @@ export default function LiveCallsTab() {
         <div className="lg:col-span-1 space-y-4">
           <h3 className="text-lg font-bold text-gray-900">Active Calls</h3>
           {activeCalls.filter((c) => c.status !== 'ended').map((call) => (
-            <Card
+            <div
               key={call.id}
-              className={`p-4 cursor-pointer transition-all ${
-                selectedCall?.id === call.id
-                  ? 'ring-2 ring-primary'
-                  : 'hover:shadow-lg'
-              }`}
               onClick={() => setSelectedCall(call)}
             >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <div className="font-medium text-gray-900">{call.patientName}</div>
-                  <div className="text-sm text-gray-600">{call.patientId}</div>
-                </div>
-                <div
-                  className={`w-3 h-3 rounded-full ${
-                    call.status === 'active' ? 'bg-success animate-pulse' : 'bg-orange-500'
-                  }`}
-                />
-              </div>
-
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Type:</span>
-                  <span className="font-medium text-gray-900">{call.callType}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Medication:</span>
-                  <span className="font-medium text-gray-900">{call.medication}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Duration:</span>
-                  <span className="font-medium text-gray-900">{formatDuration(call.duration)}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Sentiment:</span>
-                  <span
-                    className={`text-xs font-medium px-2 py-1 rounded-full ${
-                      call.sentiment === 'positive'
-                        ? 'bg-success/10 text-success'
-                        : call.sentiment === 'neutral'
-                        ? 'bg-gray-100 text-gray-700'
-                        : 'bg-orange-500/10 text-orange-600'
+              <Card
+                className={`p-4 cursor-pointer transition-all ${
+                  selectedCall?.id === call.id
+                    ? 'ring-2 ring-primary'
+                    : 'hover:shadow-lg'
+                }`}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="font-medium text-gray-900">{call.patientName}</div>
+                    <div className="text-sm text-gray-600">{call.patientId}</div>
+                  </div>
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      call.status === 'active' ? 'bg-success animate-pulse' : 'bg-orange-500'
                     }`}
-                  >
-                    {call.sentiment}
-                  </span>
+                  />
                 </div>
-              </div>
-            </Card>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Type:</span>
+                    <span className="font-medium text-gray-900">{call.callType}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Medication:</span>
+                    <span className="font-medium text-gray-900">{call.medication}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Duration:</span>
+                    <span className="font-medium text-gray-900">{formatDuration(call.duration)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-600">Sentiment:</span>
+                    <span
+                      className={`text-xs font-medium px-2 py-1 rounded-full ${
+                        call.sentiment === 'positive'
+                          ? 'bg-success/10 text-success'
+                          : call.sentiment === 'neutral'
+                          ? 'bg-gray-100 text-gray-700'
+                          : 'bg-orange-500/10 text-orange-600'
+                      }`}
+                    >
+                      {call.sentiment}
+                    </span>
+                  </div>
+                </div>
+              </Card>
+            </div>
           ))}
 
           {activeCalls.filter((c) => c.status !== 'ended').length === 0 && (
