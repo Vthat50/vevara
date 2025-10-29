@@ -1,9 +1,11 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { ArrowLeft, Phone, MessageSquare, AlertCircle, CheckCircle, Clock, TrendingUp, Activity, Calendar, Pill, User, CreditCard } from 'lucide-react'
 import Card from '@/components/Card'
 import Button from '@/components/Button'
+import PostCallForm from '@/components/dashboard/PostCallForm'
 
 interface AdherencePatient {
   id: string
@@ -307,6 +309,80 @@ export default function PatientAdherencePage() {
   const patient = adherencePatients[patientId]
   const patientCalls = voiceCallRecords.filter(call => call.patientId === patientId)
 
+  // State for managing form data for each call
+  const [callFormData, setCallFormData] = useState<{ [callId: string]: any }>({})
+  const [expandedForms, setExpandedForms] = useState<{ [callId: string]: boolean }>({})
+
+  // Auto-expand and auto-fill forms for calls with transcripts on page load
+  useEffect(() => {
+    if (patientCalls.length > 0) {
+      const initialExpandedState: { [callId: string]: boolean } = {}
+      patientCalls.forEach(call => {
+        // Auto-expand if call has transcript and no saved data yet
+        if (call.transcript && call.transcript.length > 0 && !callFormData[call.id]) {
+          initialExpandedState[call.id] = true
+        }
+      })
+      setExpandedForms(initialExpandedState)
+    }
+  }, [patientCalls.length]) // Only run on mount
+
+  const handleSaveFormData = (callId: string, data: any) => {
+    setCallFormData(prev => ({
+      ...prev,
+      [callId]: data
+    }))
+    console.log('Saved form data for call:', callId, data)
+    // In production, this would send to backend API
+  }
+
+  const toggleFormExpanded = (callId: string) => {
+    setExpandedForms(prev => ({
+      ...prev,
+      [callId]: !prev[callId]
+    }))
+  }
+
+  // Highlight medical keywords in transcript (like Nurodot)
+  const highlightKeywords = (text: string) => {
+    const keywords = {
+      sideEffects: ['redness', 'headache', 'pain', 'painful', 'swollen', 'nausea', 'fever', 'fatigue', 'dizziness', 'dry', 'rash', 'reaction', 'injection site'],
+      adherence: ['taking', 'prescribed', 'schedule', 'on track', 'adherent', 'doing well', 'missed', 'forgot'],
+      positive: ['improved', 'better', 'helpful', 'working', 'great']
+    }
+
+    const allKeywords = [...keywords.sideEffects, ...keywords.adherence, ...keywords.positive]
+    const regex = new RegExp(`\\b(${allKeywords.join('|')})\\w*\\b`, 'gi')
+
+    const parts = text.split(regex)
+
+    return parts.map((part, index) => {
+      const lowerPart = part.toLowerCase()
+      if (keywords.sideEffects.some(kw => lowerPart.includes(kw))) {
+        return (
+          <span key={index} className="bg-yellow-200 text-yellow-900 font-semibold px-1 rounded">
+            {part}
+          </span>
+        )
+      }
+      if (keywords.adherence.some(kw => lowerPart.includes(kw))) {
+        return (
+          <span key={index} className="bg-green-200 text-green-900 font-semibold px-1 rounded">
+            {part}
+          </span>
+        )
+      }
+      if (keywords.positive.some(kw => lowerPart.includes(kw))) {
+        return (
+          <span key={index} className="bg-blue-200 text-blue-900 font-semibold px-1 rounded">
+            {part}
+          </span>
+        )
+      }
+      return <span key={index}>{part}</span>
+    })
+  }
+
   if (!patient) {
     return (
       <div className="min-h-screen bg-gray-50 p-6">
@@ -495,32 +571,78 @@ export default function PatientAdherencePage() {
                     </div>
                   )}
 
-                  {/* Transcript */}
+                  {/* Post-Call Documentation Form */}
+                  <div className="mb-4">
+                    <button
+                      onClick={() => toggleFormExpanded(call.id)}
+                      className="w-full text-left px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-primary" />
+                          <span className="font-medium text-primary text-sm">
+                            {callFormData[call.id] ? '✓ Documentation Completed' : 'Complete Post-Call Documentation'}
+                          </span>
+                        </div>
+                        <span className="text-xs text-primary">
+                          {expandedForms[call.id] ? 'Hide Form' : 'Show Form'}
+                        </span>
+                      </div>
+                    </button>
+
+                    {expandedForms[call.id] && (
+                      <div className="mt-3">
+                        <PostCallForm
+                          callId={call.id}
+                          patientName={patient.patientName}
+                          callDate={call.callDate}
+                          transcript={call.transcript}
+                          existingData={callFormData[call.id]}
+                          onSave={(data) => handleSaveFormData(call.id, data)}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Transcript - Nurodot Style */}
                   {call.transcript ? (
                     <div>
-                      <h3 className="font-bold text-gray-900 mb-3">Full Transcript</h3>
-                      <div className="space-y-3 max-h-[600px] overflow-y-auto">
+                      <h3 className="font-bold text-gray-900 mb-4 text-xl">Full Transcript</h3>
+                      <div className="space-y-4 min-h-[600px] max-h-[800px] overflow-y-auto p-6 bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-lg">
                         {call.transcript.map((message, idx) => (
-                          <div
-                            key={idx}
-                            className={`p-3 rounded-lg ${
-                              message.speaker === 'AI' ? 'bg-primary/10 border border-primary/20' : 'bg-gray-100 border border-gray-200'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className={`text-xs font-bold ${message.speaker === 'AI' ? 'text-primary' : 'text-gray-900'}`}>
-                                {message.speaker === 'AI' ? '🤖 AI Voice Agent' : '👤 Patient'}
-                              </span>
-                              <span className="text-xs text-gray-600">{message.time}</span>
+                          <div key={idx} className={`flex gap-4 ${message.speaker === 'AI' ? '' : 'flex-row-reverse'}`}>
+                            {/* Avatar Circle */}
+                            <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-sm ${
+                              message.speaker === 'AI' ? 'bg-blue-500' : 'bg-green-500'
+                            }`}>
+                              {message.speaker === 'AI' ? (
+                                <MessageSquare className="h-5 w-5 text-white" />
+                              ) : (
+                                <User className="h-5 w-5 text-white" />
+                              )}
                             </div>
-                            <p className="text-sm text-gray-900">{message.message}</p>
+
+                            {/* Message Bubble */}
+                            <div className="flex-1 max-w-[75%]">
+                              <div className={`${message.speaker === 'Patient' ? 'ml-auto' : ''} inline-block p-4 rounded-lg shadow-sm ${
+                                message.speaker === 'AI'
+                                  ? 'bg-white border border-slate-200'
+                                  : 'bg-green-100 border border-green-200'
+                              }`}>
+                                <p className="text-sm sm:text-base text-slate-900 leading-relaxed">
+                                  {highlightKeywords(message.message)}
+                                </p>
+                                <p className="text-xs text-slate-500 mt-2">{message.time}</p>
+                              </div>
+                            </div>
                           </div>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <div className="text-center text-gray-500 py-4">
-                      No transcript available for this call
+                    <div className="text-center text-gray-500 py-8 bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-lg">
+                      <MessageSquare className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+                      <p className="text-sm">No transcript available for this call</p>
                     </div>
                   )}
                 </div>
