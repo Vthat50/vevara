@@ -8,7 +8,8 @@ import ReferralsIntakeTab from '@/components/dashboard/ReferralsIntakeTab'
 import CallManagementTab from '@/components/dashboard/CallManagementTab'
 import OutboundEnrollmentTab from '@/components/dashboard/OutboundEnrollmentTab'
 import PriorAuthorizationTab from '@/components/dashboard/PriorAuthorizationTab'
-import EscalationTab from '@/components/dashboard/EscalationTab'
+import MedicationAdherenceTab from '@/components/dashboard/MedicationAdherenceTab'
+import GenerativeEngineTab from '@/components/dashboard/GenerativeEngineTab'
 import IntegrationsTab from '@/components/dashboard/IntegrationsTab'
 
 function DashboardContent() {
@@ -34,8 +35,10 @@ function DashboardContent() {
         return <OutboundEnrollmentTab />
       case 'prior-authorization':
         return <PriorAuthorizationTab onNavigate={setActiveTab} />
-      case 'escalation':
-        return <EscalationTab />
+      case 'medication-adherence':
+        return <MedicationAdherenceTab />
+      case 'generative-engine':
+        return <GenerativeEngineTab />
       case 'integrations':
         return <IntegrationsTab />
       default:

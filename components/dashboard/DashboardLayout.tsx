@@ -29,7 +29,9 @@ import {
   UserCheck,
   Stethoscope,
   FileCheck,
-  FileText
+  FileText,
+  Pill,
+  Bot
 } from 'lucide-react'
 
 interface DashboardLayoutProps {
@@ -60,7 +62,8 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
     { id: 'prior-authorization', label: 'Prior Authorization', icon: FileCheck },
     { id: 'outbound-enrollment', label: 'Copay Assistance', icon: PhoneOutgoing },
     { id: 'calls', label: 'Inbound Support', icon: PhoneIncoming },
-    { id: 'escalation', label: 'Escalation', icon: UserCheck },
+    { id: 'medication-adherence', label: 'Medication Adherence', icon: Pill },
+    { id: 'generative-engine', label: 'Generative Engine', icon: Bot },
     { id: 'integrations', label: 'Integrations', icon: Database },
   ]
 

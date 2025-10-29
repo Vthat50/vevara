@@ -287,7 +287,12 @@ export default function StartFormViewerPage() {
                 <div className="space-y-2">
                   {form.status === 'complete' && form.benefitsInvestigation?.paRequired && (
                     <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=prior-authorization'}>
-                      Track PA Status (Provider Submitted)
+                      Track PA Status (Doctor Submitted)
+                    </Button>
+                  )}
+                  {form.status === 'complete' && form.benefitsInvestigation?.copayEligible && !form.benefitsInvestigation?.paRequired && (
+                    <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=outbound-enrollment'}>
+                      Schedule Patient Welcome Call
                     </Button>
                   )}
                   <Button variant="secondary" className="w-full" onClick={() => window.print()}>

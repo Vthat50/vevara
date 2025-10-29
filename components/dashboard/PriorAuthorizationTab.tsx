@@ -37,7 +37,7 @@ const priorAuthorizations: PriorAuthorization[] = [
     daysPending: 0,
     lastUpdate: 'Just now',
     priority: 'high',
-    notes: 'PA submitted by Dr. Cheng\'s office - tracking status with insurance'
+    notes: 'PA submitted by Dr. Cheng\'s office to insurance - hub tracking approval status'
   },
   {
     id: 'PA001',
