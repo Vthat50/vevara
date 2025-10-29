@@ -980,7 +980,7 @@ export default function GenerativeEngineTab() {
                         </div>
                         <div className="flex-1">
                           <div className="text-sm font-medium text-gray-900 mb-1">Alert on Significant Changes</div>
-                          <div className="text-sm text-gray-700">Automatic email alerts when visibility drops >5% or accuracy falls below 85%</div>
+                          <div className="text-sm text-gray-700">Automatic email alerts when visibility drops {'>'}5% or accuracy falls below 85%</div>
                         </div>
                       </div>
 
