@@ -142,7 +142,7 @@ export default function UnifiedDashboardTab({ onNavigate }: UnifiedDashboardTabP
     return (
       <div
         className="bg-white border border-neutral-200 rounded-lg hover:border-primary-300 hover:shadow-sm transition-all cursor-pointer"
-        style={{ padding: spacing[5] }}
+        style={{ padding: spacing[6] }}
         onClick={() => onNavigate(metric.target)}
       >
         <div className="flex items-start justify-between" style={{ marginBottom: spacing[3] }}>
@@ -281,7 +281,7 @@ export default function UnifiedDashboardTab({ onNavigate }: UnifiedDashboardTabP
                 <div key={index} className="flex flex-col items-center" style={{ flex: 1, gap: spacing[1] }}>
                   <div className="w-full bg-primary-200 rounded-t" style={{
                     height: `${day.paApprovals}%`,
-                    backgroundColor: colors.primary[200],
+                    backgroundColor: colors.primary[100],
                     minHeight: '4px'
                   }} />
                   <div className="text-neutral-500" style={{ fontSize: typography.fontSize.xs }}>
