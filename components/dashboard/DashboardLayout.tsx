@@ -31,8 +31,15 @@ import {
   FileCheck,
   FileText,
   Pill,
-  Bot
+  Bot,
+  Brain,
+  Lightbulb,
+  TrendingDown,
+  Award,
+  Target,
+  DollarSign
 } from 'lucide-react'
+import { colors, spacing, typography, layout } from '@/lib/design-system'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -57,66 +64,94 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
   }
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-    { id: 'patients', label: 'Referrals & Intake', icon: FileText },
-    { id: 'prior-authorization', label: 'Prior Authorization', icon: FileCheck },
-    { id: 'outbound-enrollment', label: 'Copay Assistance', icon: PhoneOutgoing },
-    { id: 'calls', label: 'Inbound Support', icon: PhoneIncoming },
-    { id: 'medication-adherence', label: 'Medication Adherence', icon: Pill },
-    { id: 'generative-engine', label: 'Generative Engine', icon: Bot },
-    { id: 'integrations', label: 'Integrations', icon: Database },
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'patient-operations', label: 'Patient Operations', icon: Users },
+    { id: 'access-reimbursement', label: 'Access & Reimbursement', icon: DollarSign },
+    { id: 'contact-center', label: 'Contact Center', icon: PhoneIncoming },
+    { id: 'intelligence', label: 'Intelligence', icon: Brain },
+    { id: 'compliance-safety', label: 'Compliance & Safety', icon: Shield },
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen flex" style={{ backgroundColor: colors.background.page }}>
       {/* Sidebar */}
       <aside
-        className={`${
-          isSidebarOpen ? 'w-64' : 'w-20'
-        } bg-white border-r border-gray-200 transition-all duration-300 flex flex-col`}
+        className="bg-white border-r transition-all duration-300 flex flex-col"
+        style={{
+          width: isSidebarOpen ? layout.sidebarWidth : '80px',
+          borderColor: colors.neutral[200]
+        }}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
+        <div className="flex items-center justify-between border-b" style={{ height: layout.headerHeight, padding: `0 ${spacing[6]}`, borderColor: colors.neutral[200] }}>
           {isSidebarOpen && (
-            <h1 className="text-2xl font-bold text-primary">Vevara</h1>
+            <h1 className="text-neutral-900" style={{ fontSize: typography.fontSize['2xl'], fontWeight: typography.fontWeight.semibold }}>Vevara</h1>
           )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="hover:bg-neutral-100 rounded transition-colors"
+            style={{ padding: spacing[2] }}
           >
-            {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isSidebarOpen ? <X style={{ width: '20px', height: '20px', color: colors.neutral[600] }} /> : <Menu style={{ width: '20px', height: '20px', color: colors.neutral[600] }} />}
           </button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-6">
+        <nav className="flex-1" style={{ paddingTop: spacing[6], paddingBottom: spacing[6] }}>
           {tabs.map((tab) => {
             const Icon = tab.icon
+            const isActive = activeTab === tab.id
             return (
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`w-full flex items-center gap-3 px-6 py-3 transition-colors ${
-                  activeTab === tab.id
-                    ? 'bg-primary/10 text-primary border-r-4 border-primary'
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
+                className="w-full flex items-center transition-colors"
+                style={{
+                  gap: spacing[3],
+                  padding: `${spacing[3]} ${spacing[6]}`,
+                  backgroundColor: isActive ? colors.neutral[50] : 'transparent',
+                  color: isActive ? colors.neutral[900] : colors.neutral[600],
+                  borderRight: isActive ? `3px solid ${colors.primary[500]}` : 'none',
+                  fontSize: typography.fontSize.sm,
+                  fontWeight: isActive ? typography.fontWeight.medium : typography.fontWeight.normal
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) e.currentTarget.style.backgroundColor = colors.neutral[50]
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) e.currentTarget.style.backgroundColor = 'transparent'
+                }}
               >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {isSidebarOpen && <span className="font-medium">{tab.label}</span>}
+                <Icon style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+                {isSidebarOpen && <span>{tab.label}</span>}
               </button>
             )
           })}
         </nav>
 
         {/* Logout */}
-        <div className="border-t border-gray-200 p-4">
+        <div className="border-t" style={{ borderColor: colors.neutral[200], padding: spacing[4] }}>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors"
+            className="w-full flex items-center rounded transition-colors"
+            style={{
+              gap: spacing[3],
+              padding: `${spacing[3]} ${spacing[4]}`,
+              color: colors.neutral[700],
+              fontSize: typography.fontSize.sm,
+              fontWeight: typography.fontWeight.medium
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = colors.status.errorBg
+              e.currentTarget.style.color = colors.status.error
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent'
+              e.currentTarget.style.color = colors.neutral[700]
+            }}
           >
-            <LogOut className="w-5 h-5 flex-shrink-0" />
-            {isSidebarOpen && <span className="font-medium">Logout</span>}
+            <LogOut style={{ width: '20px', height: '20px', flexShrink: 0 }} />
+            {isSidebarOpen && <span>Logout</span>}
           </button>
         </div>
       </aside>
@@ -124,21 +159,21 @@ export default function DashboardLayout({ children, activeTab, onTabChange }: Da
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
         {/* Header */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+        <header className="bg-white border-b flex items-center justify-between" style={{ height: layout.headerHeight, borderColor: colors.neutral[200], padding: `0 ${spacing[8]}` }}>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 capitalize">
+            <h2 className="text-neutral-900 capitalize" style={{ fontSize: typography.fontSize['3xl'], fontWeight: typography.fontWeight.semibold }}>
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-              <span className="text-sm font-medium text-primary">AD</span>
+          <div className="flex items-center" style={{ gap: spacing[4] }}>
+            <div className="rounded-full flex items-center justify-center" style={{ width: '40px', height: '40px', backgroundColor: colors.neutral[100] }}>
+              <span className="text-neutral-700" style={{ fontSize: typography.fontSize.sm, fontWeight: typography.fontWeight.medium }}>AD</span>
             </div>
           </div>
         </header>
 
         {/* Content */}
-        <div className="p-8">
+        <div>
           {children}
         </div>
       </main>

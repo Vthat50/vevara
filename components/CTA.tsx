@@ -27,11 +27,11 @@ export default function CTA() {
           </div>
 
           <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
-            Ready to Close Your<br />Patient Support Gap?
+            Let&apos;s Design Your<br />Patient Hub Together
           </h2>
 
           <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Discover how voice AI can transform your patient engagement strategy. Book a call with our team or hear our AI in action.
+            We partner with biotech companies to build AI patient support tailored to your therapy, your patients, and your launch timeline.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -39,7 +39,7 @@ export default function CTA() {
               size="lg"
               className="bg-white text-gray-900 hover:bg-gray-100 shadow-xl shadow-black/20 px-8"
             >
-              Book a Strategy Session
+              Schedule a Design Session
               <ArrowRight className="w-5 h-5 ml-2 inline" />
             </Button>
             <Button
@@ -47,7 +47,7 @@ export default function CTA() {
               size="lg"
               className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8"
             >
-              Listen to Demo Call
+              See a Demo
             </Button>
           </div>
 

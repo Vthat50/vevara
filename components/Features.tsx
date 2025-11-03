@@ -15,24 +15,24 @@ import FeatureCard from './FeatureCard'
 export default function Features() {
   const features = [
     {
-      icon: MessageCircle,
-      title: 'Enhance Medication Adherence',
-      description: 'Intelligent voice reminders and check-ins that keep patients on track. Personalized scheduling adapts to individual routines and preferences.',
-    },
-    {
-      icon: PhoneCall,
-      title: 'Increase Program Enrollment',
-      description: 'Automated outreach that simplifies onboarding and removes barriers. Conversational guidance makes complex programs easy to understand.',
-    },
-    {
       icon: Users,
-      title: 'Scale Patient Support',
-      description: 'Handle thousands of patient interactions simultaneously without compromising quality. Integrates seamlessly with your existing CRM and health systems.',
+      title: 'Instant Patient Navigation',
+      description: 'Guide patients from diagnosis through treatment. AI-powered navigation helps patients understand their journey and next steps at every stage.',
+    },
+    {
+      icon: CreditCard,
+      title: 'Automated Access Support',
+      description: 'Streamline prior authorization and co-pay assistance. Automated workflows remove barriers and accelerate patient access to therapy.',
     },
     {
       icon: GraduationCap,
-      title: 'Patient Education & Guidance',
-      description: 'Interactive Q&A for dosing questions, administration instructions, and common concerns. Accessible information without app downloads or portals.',
+      title: 'Personalized Education',
+      description: 'Answer treatment questions in real-time. Interactive Q&A for dosing questions, administration instructions, and common concerns—accessible 24/7.',
+    },
+    {
+      icon: MessageCircle,
+      title: 'Proactive Adherence',
+      description: 'Smart reminders and check-ins that actually work. Intelligent scheduling adapts to individual routines and preferences to keep patients on track.',
     },
     {
       icon: Activity,
@@ -40,9 +40,9 @@ export default function Features() {
       description: 'Proactive side effect tracking with intelligent severity assessment. Automatic escalation protocols for critical situations that require immediate attention.',
     },
     {
-      icon: CreditCard,
-      title: 'Financial Assistance Support',
-      description: 'Streamlined copay card enrollment and benefits verification. Plain-language explanations that help patients access the support they need.',
+      icon: PhoneCall,
+      title: 'Scale Patient Support',
+      description: 'Handle thousands of patient interactions simultaneously without compromising quality. Integrates seamlessly with your existing CRM and health systems.',
     },
   ]
 
@@ -72,13 +72,13 @@ export default function Features() {
           className="text-center mb-20"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full mb-6">
-            <span className="text-xs font-medium text-gray-700">PROVEN SOLUTIONS</span>
+            <span className="text-xs font-medium text-gray-700">INTELLIGENT AI AGENTS</span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-            Close the Patient Support Gap
+            Intelligent AI Agents That Support Patients 24/7
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Voice AI that transforms pharmaceutical patient engagement—no apps, no portals, no friction. Just intelligent conversations that drive measurable outcomes.
+            Built specifically for rare disease, oncology, gene therapy, and specialty medicines.
           </p>
         </motion.div>
 

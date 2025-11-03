@@ -25,23 +25,23 @@ export default function Hero() {
           <motion.div {...fadeInUp}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full mb-8 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-primary" />
-              <span className="text-xs font-medium text-gray-700">Voice AI for Patient Safety</span>
+              <span className="text-xs font-medium text-gray-700">AI-Powered Patient Hubs</span>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight">
-              Transform Uncertainty Into Confidence
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-[1.1] tracking-tight">
+              Launch Your Patient Support Program in Weeks, Not Months
             </h1>
 
             <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-xl">
-              Intelligent voice technology that bridges the gap between pharmaceutical support and patient care—delivering clarity, adherence, and better health outcomes.
+              AI-powered patient hubs that guide patients through complex treatment journeys—from diagnosis to adherence. Purpose-built for specialty pharma and biotech.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12">
               <Button size="lg" className="shadow-lg shadow-primary/20">
-                Book a Strategy Call
+                See How It Works
               </Button>
               <Button variant="outline" size="lg">
-                Hear the Demo
+                Book a Demo
               </Button>
             </div>
 

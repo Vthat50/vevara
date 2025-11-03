@@ -286,19 +286,19 @@ export default function StartFormViewerPage() {
                 <h3 className="font-bold text-gray-900 mb-3">Next Actions</h3>
                 <div className="space-y-2">
                   {form.status === 'complete' && form.benefitsInvestigation?.paRequired && (
-                    <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=prior-authorization'}>
+                    <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=access-reimbursement'}>
                       Track PA Status (Doctor Submitted)
                     </Button>
                   )}
                   {form.status === 'complete' && form.benefitsInvestigation?.copayEligible && !form.benefitsInvestigation?.paRequired && (
-                    <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=outbound-enrollment'}>
+                    <Button className="w-full" onClick={() => window.location.href = '/dashboard?tab=contact-center'}>
                       Schedule Patient Welcome Call
                     </Button>
                   )}
                   <Button variant="secondary" className="w-full" onClick={() => window.print()}>
                     Print Form
                   </Button>
-                  <Button variant="secondary" className="w-full" onClick={() => window.location.href = '/dashboard?tab=patients'}>
+                  <Button variant="secondary" className="w-full" onClick={() => window.location.href = '/dashboard?tab=patient-operations'}>
                     Back to Referrals & Intake
                   </Button>
                 </div>

@@ -3,19 +3,17 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
-import OverviewTab from '@/components/dashboard/OverviewTab'
-import ReferralsIntakeTab from '@/components/dashboard/ReferralsIntakeTab'
-import CallManagementTab from '@/components/dashboard/CallManagementTab'
-import OutboundEnrollmentTab from '@/components/dashboard/OutboundEnrollmentTab'
-import PriorAuthorizationTab from '@/components/dashboard/PriorAuthorizationTab'
-import MedicationAdherenceTab from '@/components/dashboard/MedicationAdherenceTab'
-import GenerativeEngineTab from '@/components/dashboard/GenerativeEngineTab'
-import IntegrationsTab from '@/components/dashboard/IntegrationsTab'
+import UnifiedDashboardTab from '@/components/dashboard/UnifiedDashboardTab'
+import PatientOperationsTab from '@/components/dashboard/PatientOperationsTab'
+import AccessReimbursementTab from '@/components/dashboard/AccessReimbursementTab'
+import ContactCenterTab from '@/components/dashboard/ContactCenterTab'
+import IntelligenceTab from '@/components/dashboard/IntelligenceTab'
+import ComplianceSafetyTab from '@/components/dashboard/ComplianceSafetyTab'
 
 function DashboardContent() {
   const searchParams = useSearchParams()
   const tabParam = searchParams.get('tab')
-  const [activeTab, setActiveTab] = useState(tabParam || 'overview')
+  const [activeTab, setActiveTab] = useState(tabParam || 'dashboard')
 
   useEffect(() => {
     if (tabParam) {
@@ -25,24 +23,20 @@ function DashboardContent() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'overview':
-        return <OverviewTab onNavigate={setActiveTab} />
-      case 'patients':
-        return <ReferralsIntakeTab onNavigate={setActiveTab} />
-      case 'calls':
-        return <CallManagementTab />
-      case 'outbound-enrollment':
-        return <OutboundEnrollmentTab />
-      case 'prior-authorization':
-        return <PriorAuthorizationTab onNavigate={setActiveTab} />
-      case 'medication-adherence':
-        return <MedicationAdherenceTab />
-      case 'generative-engine':
-        return <GenerativeEngineTab />
-      case 'integrations':
-        return <IntegrationsTab />
+      case 'dashboard':
+        return <UnifiedDashboardTab onNavigate={setActiveTab} />
+      case 'patient-operations':
+        return <PatientOperationsTab onNavigate={setActiveTab} />
+      case 'access-reimbursement':
+        return <AccessReimbursementTab />
+      case 'contact-center':
+        return <ContactCenterTab />
+      case 'intelligence':
+        return <IntelligenceTab onNavigate={setActiveTab} />
+      case 'compliance-safety':
+        return <ComplianceSafetyTab />
       default:
-        return <OverviewTab onNavigate={setActiveTab} />
+        return <UnifiedDashboardTab onNavigate={setActiveTab} />
     }
   }
 
