@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const salesforceStatus = mapVevaraStatusToSalesforce(statusUpdate.vevaraStatus);
 
     // Prepare update payload
-    const updatePayload = {
+    const updatePayload: Record<string, any> = {
       status: salesforceStatus,
       // Custom fields
       Vevara_Status__c: statusUpdate.vevaraStatus,
