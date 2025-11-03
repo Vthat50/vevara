@@ -827,30 +827,30 @@ const calculateMetrics = (): ConversationMetrics => {
     : 0;
 
   // Sentiment distribution
-  const positive = conversations.filter(c => c.overallSentiment === 'positive').length;
-  const neutral = conversations.filter(c => c.overallSentiment === 'neutral').length;
-  const negative = conversations.filter(c => c.overallSentiment === 'negative').length;
+  const positive = conversations.filter((c: ConversationAnalytics) => c.overallSentiment === 'positive').length;
+  const neutral = conversations.filter((c: ConversationAnalytics) => c.overallSentiment === 'neutral').length;
+  const negative = conversations.filter((c: ConversationAnalytics) => c.overallSentiment === 'negative').length;
 
   // Resolution and escalation
-  const resolved = conversations.filter(c => c.resolutionStatus === 'resolved').length;
-  const escalated = conversations.filter(c => c.escalated).length;
+  const resolved = conversations.filter((c: ConversationAnalytics) => c.resolutionStatus === 'resolved').length;
+  const escalated = conversations.filter((c: ConversationAnalytics) => c.escalated).length;
 
   // Friction points
-  const allFriction = conversations.flatMap(c => c.frictionPoints);
+  const allFriction = conversations.flatMap((c: ConversationAnalytics) => c.frictionPoints);
   const frictionByType: Record<string, number> = {};
-  allFriction.forEach(f => {
+  allFriction.forEach((f: FrictionPoint) => {
     frictionByType[f.barrierType] = (frictionByType[f.barrierType] || 0) + 1;
   });
 
   // Risk conversations
-  const highRisk = conversations.filter(c => c.riskLevel === 'high' || c.riskLevel === 'critical').length;
-  const avgChurnRisk = Math.round(conversations.reduce((sum, c) => sum + c.churnRisk, 0) / totalConv);
-  const abandonmentSignals = conversations.filter(c => c.abandonmentSignals.length > 0).length;
+  const highRisk = conversations.filter((c: ConversationAnalytics) => c.riskLevel === 'high' || c.riskLevel === 'critical').length;
+  const avgChurnRisk = Math.round(conversations.reduce((sum: number, c: ConversationAnalytics) => sum + c.churnRisk, 0) / totalConv);
+  const abandonmentSignals = conversations.filter((c: ConversationAnalytics) => c.abandonmentSignals.length > 0).length;
 
   // Top topics
   const topicCounts: Record<string, { count: number, totalSentiment: number }> = {};
-  conversations.forEach(c => {
-    c.topicsDetected.forEach(topicId => {
+  conversations.forEach((c: ConversationAnalytics) => {
+    c.topicsDetected.forEach((topicId: string) => {
       if (!topicCounts[topicId]) {
         topicCounts[topicId] = { count: 0, totalSentiment: 0 };
       }
@@ -861,7 +861,7 @@ const calculateMetrics = (): ConversationMetrics => {
 
   const topTopicsArray = Object.entries(topicCounts)
     .map(([topicId, data]) => {
-      const topic = pharmaTopics.find(t => t.id === topicId);
+      const topic = pharmaTopics.find((t: Topic) => t.id === topicId);
       return {
         topicId,
         topicName: topic?.name || topicId,
@@ -869,17 +869,17 @@ const calculateMetrics = (): ConversationMetrics => {
         sentiment: data.totalSentiment / data.count,
       };
     })
-    .sort((a, b) => b.count - a.count)
+    .sort((a: any, b: any) => b.count - a.count)
     .slice(0, 5);
 
   // Top call drivers
   const driverCounts: Record<string, number> = {};
-  conversations.forEach(c => {
+  conversations.forEach((c: ConversationAnalytics) => {
     driverCounts[c.callDriver] = (driverCounts[c.callDriver] || 0) + 1;
   });
   const topDrivers = Object.entries(driverCounts)
-    .map(([driver, count]) => ({ driver, count }))
-    .sort((a, b) => b.count - a.count)
+    .map(([driver, count]: [string, number]) => ({ driver, count }))
+    .sort((a: any, b: any) => b.count - a.count)
     .slice(0, 5);
 
   return {
@@ -912,7 +912,7 @@ const calculateMetrics = (): ConversationMetrics => {
     avgComplianceScore: Math.round(avgCompliance),
     totalFrictionPoints: allFriction.length,
     frictionByType: frictionByType as any,
-    avgFrictionScore: Math.round(conversations.reduce((sum, c) => sum + c.frictionScore, 0) / totalConv),
+    avgFrictionScore: Math.round(conversations.reduce((sum: number, c: ConversationAnalytics) => sum + c.frictionScore, 0) / totalConv),
     highRiskConversations: highRisk,
     abandonmentSignalsDetected: abandonmentSignals,
     avgChurnRisk: avgChurnRisk,
