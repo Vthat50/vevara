@@ -216,7 +216,7 @@ export const adherenceConversations: ConversationAnalytics[] = [
         id: 'friction-adh-003',
         conversationId: 'VC003',
         messageIndex: 9,
-        barrierType: 'adherence',
+        barrierType: 'clinical',
         description: 'Patient admitted to missing doses',
         severity: 'medium',
         resolved: true,
