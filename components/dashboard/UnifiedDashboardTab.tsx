@@ -11,7 +11,11 @@ import {
   DollarSign,
   Shield,
   Activity,
-  ArrowRight
+  ArrowRight,
+  Clock,
+  Pill,
+  Zap,
+  Percent
 } from 'lucide-react';
 import { colors, spacing, typography } from '@/lib/design-system';
 
@@ -78,7 +82,7 @@ export default function UnifiedDashboardTab({ onNavigate }: UnifiedDashboardTabP
       trend: 'up',
       target: 'intelligence',
       icon: Activity,
-      description: '559 patients affected',
+      description: '559 patients • 35% Eddy Effect',
       isNegative: true
     },
     {
@@ -108,6 +112,68 @@ export default function UnifiedDashboardTab({ onNavigate }: UnifiedDashboardTabP
       icon: AlertTriangle,
       description: 'Require immediate outreach',
       isNegative: true
+    }
+  ];
+
+  // Market Access & Adherence Metrics - Industry Standards
+  const marketAccessMetrics = [
+    {
+      label: 'Eddy Effect™',
+      value: '35%',
+      change: '-8%',
+      trend: 'down',
+      target: 'intelligence',
+      icon: Activity,
+      description: 'Customer friction rate',
+      isNegative: true
+    },
+    {
+      label: 'Time to Therapy',
+      value: '12.4 days',
+      change: '-2.1d',
+      trend: 'down',
+      target: 'access-reimbursement',
+      icon: Clock,
+      description: 'Prescription to first dose',
+      isNegative: true
+    },
+    {
+      label: 'Medication Possession Ratio',
+      value: '84%',
+      change: '+3%',
+      trend: 'up',
+      target: 'patient-operations',
+      icon: Pill,
+      description: 'Standard adherence metric'
+    },
+    {
+      label: '90-Day Discontinuation',
+      value: '18%',
+      change: '-5%',
+      trend: 'down',
+      target: 'patient-operations',
+      icon: AlertTriangle,
+      description: 'Early dropout rate',
+      isNegative: true
+    },
+    {
+      label: 'Benefit Clearance Speed',
+      value: '4.2 days',
+      change: '-1.1d',
+      trend: 'down',
+      target: 'access-reimbursement',
+      icon: Zap,
+      description: 'Referral to benefits verified',
+      isNegative: true
+    },
+    {
+      label: 'Copay Enrollment Rate',
+      value: '76%',
+      change: '+9%',
+      trend: 'up',
+      target: 'access-reimbursement',
+      icon: DollarSign,
+      description: 'Eligible patients enrolled'
     }
   ];
 
@@ -249,6 +315,18 @@ export default function UnifiedDashboardTab({ onNavigate }: UnifiedDashboardTabP
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3" style={{ gap: spacing[4] }}>
           {heroMetrics.map((metric, index) => (
+            <HeroMetricCard key={index} metric={metric} />
+          ))}
+        </div>
+      </div>
+
+      {/* Market Access & Adherence Metrics */}
+      <div>
+        <h2 className="text-neutral-900" style={{ fontSize: typography.fontSize.lg, fontWeight: typography.fontWeight.semibold, marginBottom: spacing[4] }}>
+          Market Access & Adherence Metrics
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3" style={{ gap: spacing[4] }}>
+          {marketAccessMetrics.map((metric, index) => (
             <HeroMetricCard key={index} metric={metric} />
           ))}
         </div>
