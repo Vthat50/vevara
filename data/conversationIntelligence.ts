@@ -806,24 +806,24 @@ const calculateMetrics = (): ConversationMetrics => {
 
   // Count by type
   const byType: Record<string, number> = {};
-  conversations.forEach(c => {
+  conversations.forEach((c: ConversationAnalytics) => {
     byType[c.conversationType] = (byType[c.conversationType] || 0) + 1;
   });
 
   // Calculate averages
-  const avgSentiment = conversations.reduce((sum, c) => sum + c.sentimentScore, 0) / totalConv;
-  const avgQuality = conversations.reduce((sum, c) => sum + c.qualityScore, 0) / totalConv;
-  const avgCompliance = conversations.reduce((sum, c) => sum + c.complianceScore, 0) / totalConv;
-  const avgHandleTime = Math.round(conversations.reduce((sum, c) => sum + c.duration, 0) / totalConv);
+  const avgSentiment = conversations.reduce((sum: number, c: ConversationAnalytics) => sum + c.sentimentScore, 0) / totalConv;
+  const avgQuality = conversations.reduce((sum: number, c: ConversationAnalytics) => sum + c.qualityScore, 0) / totalConv;
+  const avgCompliance = conversations.reduce((sum: number, c: ConversationAnalytics) => sum + c.complianceScore, 0) / totalConv;
+  const avgHandleTime = Math.round(conversations.reduce((sum: number, c: ConversationAnalytics) => sum + c.duration, 0) / totalConv);
 
   // Calculate CSAT and NPS averages (only from conversations that have scores)
-  const csatConversations = conversations.filter(c => c.csatScore !== undefined);
-  const npsConversations = conversations.filter(c => c.npsScore !== undefined);
+  const csatConversations = conversations.filter((c: ConversationAnalytics) => c.csatScore !== undefined);
+  const npsConversations = conversations.filter((c: ConversationAnalytics) => c.npsScore !== undefined);
   const avgCsat = csatConversations.length > 0
-    ? csatConversations.reduce((sum, c) => sum + (c.csatScore || 0), 0) / csatConversations.length
+    ? csatConversations.reduce((sum: number, c: ConversationAnalytics) => sum + (c.csatScore || 0), 0) / csatConversations.length
     : 0;
   const avgNps = npsConversations.length > 0
-    ? npsConversations.reduce((sum, c) => sum + (c.npsScore || 0), 0) / npsConversations.length
+    ? npsConversations.reduce((sum: number, c: ConversationAnalytics) => sum + (c.npsScore || 0), 0) / npsConversations.length
     : 0;
 
   // Sentiment distribution
