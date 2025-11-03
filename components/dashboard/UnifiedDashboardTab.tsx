@@ -142,7 +142,7 @@ export default function UnifiedDashboardTab({ onNavigate }: UnifiedDashboardTabP
     return (
       <div
         className="bg-white border border-neutral-200 rounded-lg hover:border-primary-300 hover:shadow-sm transition-all cursor-pointer"
-        style={{ padding: spacing[5] }}
+        style={{ padding: spacing[6] }}
         onClick={() => onNavigate(metric.target)}
       >
         <div className="flex items-start justify-between" style={{ marginBottom: spacing[3] }}>
