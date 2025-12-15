@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Get environment variables
-    const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY3
-    const agentId = process.env.ELEVENLABS_AGENT_ID3 || 'agent_6501k8mk22a9exetppcf4vdr1twh'
-    const phoneNumberId = process.env.ELEVENLABS_PHONE_NUMBER_ID3
+    const elevenLabsApiKey = process.env.ELEVENLABS_API_KEY
+    const agentId = process.env.ELEVENLABS_AGENT_ID || 'agent_6501k8mk22a9exetppcf4vdr1twh'
+    const phoneNumberId = process.env.ELEVENLABS_PHONE_NUMBER_ID
 
     // Validate configuration
     if (!elevenLabsApiKey || !agentId || !phoneNumberId) {
